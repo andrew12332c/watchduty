@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, minimum-scale=1 user-scalable=0" />
+    <title>Wildfire Map - California</title>
+    <style>
+      /* Basic styles for the map */
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+    <script
+      defer
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH_sXHkhinb0YLNpZa6rEVLzzv_eE8uf0"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize the map
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 37.7749, lng: -122.4194 }, // Centered on California
+          zoom: 6, // Suitable zoom level
+        });
+
+        // Sample wildfire data
+        const wildfires = [
+          { lat: 34.0522, lng: -118.2437, name: "Fire near Los Angeles" },
+          { lat: 38.5816, lng: -121.4944, name: "Fire near Sacramento" },
+          { lat: 36.7783, lng: -119.4179, name: "Fire in Central California" },
+        ];
+
+        // Add markers for wildfires
+        wildfires.forEach((fire) => {
+          const marker = new google.maps.Marker({
+            position: { lat: fire.lat, lng: fire.lng },
+            map: map,
+            title: fire.name,
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<strong>${fire.name}</strong>`,
+          });
+
+          marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
